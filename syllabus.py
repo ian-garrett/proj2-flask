@@ -26,6 +26,8 @@ import pre  # Preprocess schedule file
 ###
 app = flask.Flask(__name__)
 schedule = "static/schedule.txt"  # This should be configurable
+
+
 import CONFIG
 
 

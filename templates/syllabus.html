@@ -13,12 +13,15 @@
 
 <table class="class-schedule">
   {% for entry in session.schedule %}
-  {% if loop.index is divisibleby 2 %}
+  {% if entry.now == "true" %}
+  <tr class="now">
+  {% elif loop.index is divisibleby 2 %}
   <tr class="even">
   {% else %}
   <tr class="odd">
   {% endif %}	   
-    <td class="week">{{ entry.week }}</td>
+  <!--within row below, add logic statement to check if condition has been met-->
+    <td class="week">{{ entry.week }}{{ entry.weekdate }}</td>
     <td class="topic">{{ entry.topic }}</td>
     <td class="project">{{ entry.project}}</td>
   </tr>

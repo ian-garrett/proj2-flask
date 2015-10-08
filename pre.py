@@ -14,6 +14,9 @@ def process(raw):
     field = None
     entry = { }
     cooked = [ ] 
+
+    #i = number of weeks to add
+    i = 0
     for line in raw:
         line = line.rstrip()
         if len(line) == 0:
@@ -22,16 +25,20 @@ def process(raw):
         if len(parts) == 1 and field:
             entry[field] = entry[field] + line
             continue
-        if len(parts) == 2: 
+        if len(parts) == 2:
             field = parts[0]
-            content = parts[1]
+            content = parts[1]\
+           # print ("WEEKDATE ", arrow.get(int(splitdate[2]),int(splitdate[0]),int(splitdate[1])))
         else:
             raise ValueError("Trouble with line: '{}'\n".format(line) + 
                 "Split into |{}|".format("|".join(parts)))
 
         if field == "begin":
             try:
+                startdate = content
                 base = arrow.get(content)
+                splitdate = content.split("/")
+                weekdate = arrow.get(int(splitdate[2]),int(splitdate[0]),int(splitdate[1]))
             except:
                 raise ValueError("Unable to parse date {}".format(content))
 
@@ -39,9 +46,22 @@ def process(raw):
             if entry:
                 cooked.append(entry)
                 entry = { }
+
+            #process marking current week
+            currentWeek = weekdate.replace(weeks=+(i))
+            newWeek = weekdate.replace(weeks=+i+1)
+            print(currentWeek,arrow.now(),newWeek)
+            entry['now'] = "false"
+            if currentWeek < arrow.now() < newWeek:
+                entry['now'] = "true"
+                #make a swithc, and when this condition is true, flip is to mark this week
+
             entry['topic'] = ""
             entry['project'] = ""
-            entry['week'] = content
+            entry['week'] = "Week "+content+": "
+            entry['weekdate'] = currentWeek.format('MM-DD')
+            i += 1
+            currentWeek = currentWeek.replace(weeks=+i)
 
         elif field == 'topic' or field == 'project':
             entry[field] = content

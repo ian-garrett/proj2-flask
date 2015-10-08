@@ -30,11 +30,20 @@ tr.even {
     background-color: rgb(224,213,179);
 }
 
+tr.now{
+    /* Highlight current week row*/
+    background-color:yellow;
+}
+
 .class-schedule .week {
     
     font-weight: bolder;
     font-size: 150%; 
     text-align: center; 
+}
+
+#highlightedweek {
+    background-color: yellow;
 }
 
 .class-schedule .topic {

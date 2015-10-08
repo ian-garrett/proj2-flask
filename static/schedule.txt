@@ -1,7 +1,7 @@
 
 begin:  09/28/2015
 
-week: 1
+week: 1 
 
 topic: Introduction, web architecture
 topic: Version control with git
