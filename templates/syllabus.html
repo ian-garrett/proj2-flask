@@ -13,6 +13,7 @@
 
 <table class="class-schedule">
   {% for entry in session.schedule %}
+  <!--Logic for deciding when to create a row of class "now" to be marked as current week-->
   {% if entry.now == "true" %}
   <tr class="now">
   {% elif loop.index is divisibleby 2 %}

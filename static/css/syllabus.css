@@ -31,7 +31,7 @@ tr.even {
 }
 
 tr.now{
-    /* Highlight current week row*/
+    /* Highlight current week row (row with class "now")*/
     background-color:yellow;
 }
 

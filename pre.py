@@ -27,8 +27,7 @@ def process(raw):
             continue
         if len(parts) == 2:
             field = parts[0]
-            content = parts[1]\
-           # print ("WEEKDATE ", arrow.get(int(splitdate[2]),int(splitdate[0]),int(splitdate[1])))
+            content = parts[1]
         else:
             raise ValueError("Trouble with line: '{}'\n".format(line) + 
                 "Split into |{}|".format("|".join(parts)))
@@ -47,11 +46,12 @@ def process(raw):
                 cooked.append(entry)
                 entry = { }
 
-            #process marking current week
+            #set current week and next week
             currentWeek = weekdate.replace(weeks=+(i))
             newWeek = weekdate.replace(weeks=+i+1)
-            print(currentWeek,arrow.now(),newWeek)
+            #by default, a week is considered to not be the current week. This saves an extra line of code that would result from an else statement
             entry['now'] = "false"
+            #process marking current week
             if currentWeek < arrow.now() < newWeek:
                 entry['now'] = "true"
                 #make a swithc, and when this condition is true, flip is to mark this week
@@ -61,6 +61,7 @@ def process(raw):
             entry['week'] = "Week "+content+": "
             entry['weekdate'] = currentWeek.format('MM-DD')
             i += 1
+            #Advance current week by i (number of weeks so far +1)
             currentWeek = currentWeek.replace(weeks=+i)
 
         elif field == 'topic' or field == 'project':
